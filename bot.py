@@ -1,5 +1,5 @@
-# arquivo bot.py
 from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 class Bot:
@@ -7,17 +7,11 @@ class Bot:
         self.driver = None
 
     def initiate_bot(self):
-        # Especifique o caminho local do chromedriver na raiz do seu projeto
-        chromedriver_path = "./chromedriver"
-        # Opções do ChromeDriver
-        options = webdriver.ChromeOptions()
+        # Configuração do serviço do ChromeDriver
+        chrome_service = Service(ChromeDriverManager().install())
         
-        # Desabilitar o sandbox para a execução na Streamlit Sharing
-        options.add_argument("--no-sandbox")
-        options.add_argument("--disable-dev-shm-usage")
-        
-        # Inicialize o WebDriver do Chrome utilizando o chromedriver local e as opções definidas
-        self.driver = webdriver.Chrome(executable_path=chromedriver_path, options=options)
+        # Inicialização do WebDriver do Chrome utilizando o serviço do ChromeDriver
+        self.driver = webdriver.Chrome(service=chrome_service)
     
     def abrir_pagina_youtube(self):
         if self.driver is None:
