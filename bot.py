@@ -7,11 +7,14 @@ class Bot:
         self.driver = None
 
     def initiate_bot(self):
-        # Configuração do serviço do ChromeDriver
-        chrome_service = Service(ChromeDriverManager().install())
-        
-        # Inicialização do WebDriver do Chrome utilizando o serviço do ChromeDriver
-        self.driver = webdriver.Chrome(service=chrome_service)
+        try:
+            # Configuração do serviço do ChromeDriver
+            chrome_service = Service(ChromeDriverManager().install())
+            
+            # Inicialização do WebDriver do Chrome utilizando o serviço do ChromeDriver
+            self.driver = webdriver.Chrome(service=chrome_service)
+        except Exception as e:
+            print(f"Erro ao iniciar o bot: {e}")
     
     def abrir_pagina_youtube(self):
         if self.driver is None:
