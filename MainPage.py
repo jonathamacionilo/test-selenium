@@ -4,6 +4,7 @@ from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
 
 def abrir_youtube():
+    driver = None
     try:
         driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
         driver.get('https://www.youtube.com')
@@ -11,7 +12,8 @@ def abrir_youtube():
     except Exception as e:
         st.error(f"Ocorreu um erro ao acessar o YouTube: {e}")
     finally:
-        driver.quit()
+        if driver:
+            driver.quit()
 
 if __name__ == "__main__":
     st.title('Acesso ao YouTube com Selenium')
