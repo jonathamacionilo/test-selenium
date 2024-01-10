@@ -1,17 +1,28 @@
-import streamlit as st
-import os, sys
-
-@st.cache_resource
-def installff():
-  os.system('sbase install geckodriver')
-  os.system('ln -s /home/appuser/venv/lib/python3.7/site-packages/seleniumbase/drivers/geckodriver /home/appuser/venv/bin/geckodriver')
-
-_ = installff()
 from selenium import webdriver
-from selenium.webdriver import FirefoxOptions
-opts = FirefoxOptions()
-opts.add_argument("--headless")
-browser = webdriver.Firefox(options=opts)
+from selenium.webdriver.firefox.service import Service
+from selenium.webdriver.firefox.options import Options
+from webdriver_manager.firefox import GeckoDriverManager
+import streamlit as st
 
-browser.get('http://example.com')
-st.write(browser.page_source)
+def abrir_youtube():
+    try:
+        options = Options()
+        options.add_argument("--headless")
+        
+        # Inicializa o serviço do GeckoDriver usando o GeckoDriverManager
+        service = Service(GeckoDriverManager().install())
+
+        # Inicializa o WebDriver do Firefox com as opções definidas
+        driver = webdriver.Firefox(service=service, options=options)
+        
+        driver.get('https://www.youtube.com/')
+        
+        st.write("YouTube acessado com sucesso!")
+        
+        driver.quit()
+        
+    except Exception as e:
+        st.write(f"Não foi possível acessar o YouTube: {e}")
+
+if __name__ == "__main__":
+    abrir_youtube()
