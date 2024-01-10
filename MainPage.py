@@ -10,5 +10,5 @@ botao = st.button(
     type='primary'
 )
 if botao:
-    chamada.acessar_youtube()
+    chamada.abrir_pagina_youtube()
     
