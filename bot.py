@@ -18,3 +18,4 @@ class Bot:
             self.initiate_bot()
         if self.driver:
             self.driver.get('https://www.youtube.com.br')
+
