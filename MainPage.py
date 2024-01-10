@@ -9,8 +9,14 @@ def abrir_youtube():
         options = Options()
         options.add_argument("--headless")
         
+        # Defina o caminho do binário do Firefox
+        firefox_binary = '/path/to/your/firefox-binary'  # Substitua pelo caminho do seu binário do Firefox
+
         # Inicializa o serviço do GeckoDriver usando o GeckoDriverManager
         service = Service(GeckoDriverManager().install())
+
+        # Define o binário do Firefox para o WebDriver
+        options.binary_location = firefox_binary
 
         # Inicializa o WebDriver do Firefox com as opções definidas
         driver = webdriver.Firefox(service=service, options=options)
