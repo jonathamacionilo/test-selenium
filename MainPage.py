@@ -2,22 +2,37 @@ import streamlit as st
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium.webdriver.chrome.options import Options
 
-def abrir_youtube():
+def verificar_acesso_youtube():
+    options = Options()
+    options.add_argument("--headless")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_argument("--disable-gpu")
+    options.add_argument("--disable-features=NetworkService")
+    options.add_argument("--window-size=1920x1080")
+    options.add_argument("--disable-features=VizDisplayCompositor")
+
     driver = None
     try:
-        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
+        driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
         driver.get('https://www.youtube.com')
-        st.success("YouTube foi acessado com sucesso!")
+        return True
     except Exception as e:
-        st.error(f"Ocorreu um erro ao acessar o YouTube: {e}")
+        st.error(f"Não foi possível acessar o YouTube: {e}")
+        return False
     finally:
         if driver:
             driver.quit()
 
 if __name__ == "__main__":
-    st.title('Acesso ao YouTube com Selenium')
-    st.write("Clique no botão abaixo para acessar o YouTube.")
+    st.title('Verificar Acesso ao YouTube')
+    st.write("Clique no botão abaixo para verificar se é possível acessar o YouTube.")
 
-    if st.button('Acessar YouTube'):
-        abrir_youtube()
+    if st.button('Verificar Acesso'):
+        acesso = verificar_acesso_youtube()
+        if acesso:
+            st.success("Foi possível acessar o YouTube!")
+        else:
+            st.error("Não foi possível acessar o YouTube.")
